@@ -176,7 +176,7 @@ export default function Index() {
    const aTag =
       '<a href="https://wa.me/' +
       phoneNumber +
-      '" target="_blanck">\n' +
+      '" target="_blank">\n' +
       buttonTag +
       "\n</a>";
    const divTag =
