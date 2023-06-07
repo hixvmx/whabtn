@@ -54,13 +54,25 @@ export default function Index({ icons }) {
 
       if (position === "LT") {
          return "left:1rem;top:1rem;";
-      } else if (position === "LB") {
-         return "left:1rem;bottom:1rem;";
+      } else if (position === "TC") {
+         return "top:1rem;left:50%;transform:translateX(-50%);";
       } else if (position === "RT") {
          return "right:1rem;top:1rem;";
+      } else if (position === "LC") {
+         return "left:1rem;top:50%;transform:translateY(-50%);";
+      } else if (position === "CC") {
+         return "left:50%;top:50%;transform:translate(-50%,-50%);";
+      } else if (position === "RC") {
+         return "right:1rem;top:50%;transform:translateY(-50%);";
+      } else if (position === "LB") {
+         return "left:1rem;bottom:1rem;";
+      } else if (position === "BC") {
+         return "left:50%;bottom:1rem;transform:translateX(-50%);";
       } else if (position === "RB") {
          return "right:1rem;bottom:1rem;";
       }
+
+      // LT TC RT LC CC RC LB BC RB
    }
 
    const ShadowCode = `box-shadow:${ShadowXoffset}px ${ShadowYoffset}px ${ShadowBlur}px ${ShadowSpread}px ${ShadowColor};`;
@@ -69,11 +81,11 @@ export default function Index({ icons }) {
 
    const buttonTag = `<button style="background:${bgColor};display:flex;padding:${padding}px;border-radius:${borderRadius}%;${ShadowCode};">\n${svgTag}\n</button>`;
 
-   const aTag = `<a href="https://wa.me/${phoneNumber}" target="_blank">${buttonTag}</a>`;
+   const aTag = `<a href="https://wa.me/${phoneNumber}" target="_blank">\n${buttonTag}\n</a>`;
 
    const divTag = `<div style="position:absolute;z-index:999;${fn_position(
       position
-   )}">${aTag}</div>`;
+   )}">\n${aTag}\n</div>`;
 
    const ButtonCode = divTag;
 
@@ -178,16 +190,31 @@ export default function Index({ icons }) {
                      <span className="group_title">Position</span>
                      <div className="position">
                         <button onClick={(e) => setPosition("LT")}>
-                           Left - Top
+                           LT
+                        </button>
+                        <button onClick={(e) => setPosition("TC")}>
+                           TC
                         </button>
                         <button onClick={(e) => setPosition("RT")}>
-                           Right - Top
+                           RT
+                        </button>
+                        <button onClick={(e) => setPosition("LC")}>
+                           LC
+                        </button>
+                        <button onClick={(e) => setPosition("CC")}>
+                           CC
+                        </button>
+                        <button onClick={(e) => setPosition("RC")}>
+                           RC
                         </button>
                         <button onClick={(e) => setPosition("LB")}>
-                           Left - Bottom
+                           LB
+                        </button>
+                        <button onClick={(e) => setPosition("BC")}>
+                           BC
                         </button>
                         <button onClick={(e) => setPosition("RB")}>
-                           Right - Bottom
+                           RB
                         </button>
                      </div>
                   </div>

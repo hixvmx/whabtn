@@ -202,7 +202,7 @@ button {
 
 .position {
    display: grid;
-   grid-template-columns: repeat(2, 1fr);
+   grid-template-columns: repeat(3, 1fr);
    grid-gap: 0.5rem;
 }
 
@@ -226,7 +226,7 @@ button {
 .shadow .numz {
    margin-bottom: 0.5rem;
    display: grid;
-   grid-template-columns: repeat(2, 1fr);
+   grid-template-columns: repeat(4, 1fr);
    grid-gap: 0.5rem;
 }
 
@@ -235,10 +235,11 @@ button {
    background-color: var(--border-color-secondary);
    padding: 10px;
    border-radius: 5px;
+   text-align: center;
 }
 
 .shadow .numz input::-webkit-inner-spin-button {
-   opacity: 0;
+   display: none;
 }
 
 .shadow label div {
@@ -445,8 +446,7 @@ button {
 }
 
 @media (max-width: 700px) {
-   .position,
-   .shadow .numz {
+   .position {
       display: grid;
       grid-template-columns: repeat(1, 1fr);
       grid-gap: 0.5rem;
