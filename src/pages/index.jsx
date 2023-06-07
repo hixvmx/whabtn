@@ -193,6 +193,7 @@ export default function Index({ icons }) {
                         onChange={(e) => setBorderRadius(+e.target.value)}
                         value={borderRadius}
                         type="range"
+                        max={50}
                      />
                   </div>
 
