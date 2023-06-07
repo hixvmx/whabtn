@@ -215,30 +215,50 @@ export default function Index({ icons }) {
                      <span className="group_title">Shadow</span>
                      <div className="shadow">
                         <div className="numz">
-                           <input
-                              onChange={(e) =>
-                                 setShadowXoffset(+e.target.value)
-                              }
-                              value={ShadowXoffset}
-                              type="number"
-                           />
-                           <input
-                              onChange={(e) =>
-                                 setShadowYoffset(+e.target.value)
-                              }
-                              value={ShadowYoffset}
-                              type="number"
-                           />
-                           <input
-                              onChange={(e) => setShadowBlur(+e.target.value)}
-                              value={ShadowBlur}
-                              type="number"
-                           />
-                           <input
-                              onChange={(e) => setShadowSpread(+e.target.value)}
-                              value={ShadowSpread}
-                              type="number"
-                           />
+                           <div>
+                              <label htmlFor="shadowXOffset">X Offset</label>
+                              <input
+                                 id="shadowXOffset"
+                                 onChange={(e) =>
+                                    setShadowXoffset(+e.target.value)
+                                 }
+                                 value={ShadowXoffset}
+                                 type="number"
+                              />
+                           </div>
+                           <div>
+                              <label htmlFor="shadowYOffset">Y Offset</label>
+                              <input
+                                 id="shadowYOffset"
+                                 onChange={(e) =>
+                                    setShadowYoffset(+e.target.value)
+                                 }
+                                 value={ShadowYoffset}
+                                 type="number"
+                              />
+                           </div>
+                           <div>
+                              <label htmlFor="shadowBlur">Blur</label>
+                              <input
+                                 id="shadowBlur"
+                                 onChange={(e) =>
+                                    setShadowBlur(+e.target.value)
+                                 }
+                                 value={ShadowBlur}
+                                 type="number"
+                              />
+                           </div>
+                           <div>
+                              <label htmlFor="shadowSpread">Spread</label>
+                              <input
+                                 id="shadowSpread"
+                                 onChange={(e) =>
+                                    setShadowSpread(+e.target.value)
+                                 }
+                                 value={ShadowSpread}
+                                 type="number"
+                              />
+                           </div>
                         </div>
                         <input
                            onChange={(e) => setShadowColor(e.target.value)}
@@ -248,6 +268,7 @@ export default function Index({ icons }) {
                            hidden
                         />
                         <label htmlFor="ShadowColor">
+                           Color
                            <div style={{ background: ShadowColor }}></div>
                         </label>
                      </div>
