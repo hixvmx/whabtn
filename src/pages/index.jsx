@@ -38,7 +38,7 @@ export default function Index({ icons }) {
    const [ShadowSpread, setShadowSpread] = useState("0");
    const [ShadowColor, setShadowColor] = useState("#B0B0B0");
 
-   const [previewCode, setPreviewCode] = useState(true);
+   const [isPreviewCode, setIsPreviewCode] = useState(true);
 
    function fn_icon(iconNumber) {
       const icon = icons[iconNumber].content;
@@ -244,15 +244,15 @@ export default function Index({ icons }) {
                      />
                      <button
                         onClick={(e) =>
-                           setPreviewCode(previewCode ? false : true)
+                           setIsPreviewCode(isPreviewCode ? false : true)
                         }
                         className="copyCodeBtn"
                      >
-                        {previewCode ? "Html Code" : "Preview"}
+                        {isPreviewCode ? "Html Code" : "Preview"}
                      </button>
                   </div>
 
-                  {(previewCode && (
+                  {(isPreviewCode && (
                      <div className="preview">
                         <header>header</header>
                         <main>
