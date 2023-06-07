@@ -1,4 +1,3 @@
-import { importAllIcons } from "@/handlers/icons";
 import Head from "next/head";
 import { useState } from "react";
 import fs from "fs";
@@ -70,18 +69,12 @@ export default function Index({ icons }) {
 
    const buttonTag = `<button style="background:${bgColor};display:flex;padding:${padding}px;border-radius:${borderRadius}%;${ShadowCode};">\n${svgTag}\n</button>`;
 
-   const aTag =
-      '<a href="https://wa.me/' +
-      phoneNumber +
-      '" target="_blank">\n' +
-      buttonTag +
-      "\n</a>";
-   const divTag =
-      '<div style="position:absolute;z-index:999;' +
-      fn_position(position) +
-      '">\n' +
-      aTag +
-      "\n</div>";
+   const aTag = `<a href="https://wa.me/${phoneNumber}" target="_blank">${buttonTag}</a>`;
+
+   const divTag = `<div style="position:absolute;z-index:999;${fn_position(
+      position
+   )}">${aTag}</div>`;
+
    const ButtonCode = divTag;
 
    function createMarkup(HtmlCode) {
@@ -92,6 +85,13 @@ export default function Index({ icons }) {
 
    return (
       <>
+         <Head>
+            <title>Easy to create whatsapp button.</title>
+            <meta
+               name="viewport"
+               content="width=device-width, initial-scale=1"
+            />
+         </Head>
          <div className="main">
             <div className="aside">
                {/* Aside Header */}
@@ -112,6 +112,7 @@ export default function Index({ icons }) {
                      <div className="icon_style">
                         {icons.map((icon, index) => (
                            <button
+                              key={`icon-${index}`}
                               onClick={(e) => setSelectedIconIndex(index)}
                               type="button"
                               dangerouslySetInnerHTML={createMarkup(
