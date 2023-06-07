@@ -28,14 +28,14 @@ export default function Index({ icons }) {
    const [phoneNumber, setPhoneNumber] = useState("");
    const [bgColor, setBgColor] = useState("#62d33f");
    const [iconColor, setIconColor] = useState("#ffffff");
-   const [padding, setPadding] = useState("10");
-   const [iconSize, setIconSize] = useState("30");
-   const [borderRadius, setBorderRadius] = useState("50");
+   const [padding, setPadding] = useState(10);
+   const [iconSize, setIconSize] = useState(30);
+   const [borderRadius, setBorderRadius] = useState(50);
    const [position, setPosition] = useState("LB");
-   const [ShadowXoffset, setShadowXoffset] = useState("0");
-   const [ShadowYoffset, setShadowYoffset] = useState("5");
-   const [ShadowBlur, setShadowBlur] = useState("20");
-   const [ShadowSpread, setShadowSpread] = useState("0");
+   const [ShadowXoffset, setShadowXoffset] = useState(0);
+   const [ShadowYoffset, setShadowYoffset] = useState(5);
+   const [ShadowBlur, setShadowBlur] = useState(20);
+   const [ShadowSpread, setShadowSpread] = useState(0);
    const [ShadowColor, setShadowColor] = useState("#B0B0B0");
 
    const [isPreviewCode, setIsPreviewCode] = useState(true);
@@ -166,21 +166,21 @@ export default function Index({ icons }) {
                   <div className="group">
                      <span className="group_title">Padding</span>
                      <input
-                        onChange={(e) => setPadding(e.target.value)}
+                        onChange={(e) => setPadding(+e.target.value)}
                         value={padding}
                         type="range"
                      />
 
                      <span className="group_title">Icon size</span>
                      <input
-                        onChange={(e) => setIconSize(e.target.value)}
+                        onChange={(e) => setIconSize(+e.target.value)}
                         value={iconSize}
                         type="range"
                      />
 
                      <span className="group_title">Border radius</span>
                      <input
-                        onChange={(e) => setBorderRadius(e.target.value)}
+                        onChange={(e) => setBorderRadius(+e.target.value)}
                         value={borderRadius}
                         type="range"
                      />
@@ -224,22 +224,22 @@ export default function Index({ icons }) {
                      <div className="shadow">
                         <div className="numz">
                            <input
-                              onChange={(e) => setShadowXoffset(e.target.value)}
+                              onChange={(e) => setShadowXoffset(+e.target.value)}
                               value={ShadowXoffset}
                               type="number"
                            />
                            <input
-                              onChange={(e) => setShadowYoffset(e.target.value)}
+                              onChange={(e) => setShadowYoffset(+e.target.value)}
                               value={ShadowYoffset}
                               type="number"
                            />
                            <input
-                              onChange={(e) => setShadowBlur(e.target.value)}
+                              onChange={(e) => setShadowBlur(+e.target.value)}
                               value={ShadowBlur}
                               type="number"
                            />
                            <input
-                              onChange={(e) => setShadowSpread(e.target.value)}
+                              onChange={(e) => setShadowSpread(+e.target.value)}
                               value={ShadowSpread}
                               type="number"
                            />
