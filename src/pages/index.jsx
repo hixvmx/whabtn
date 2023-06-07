@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 
 export async function getStaticProps() {
-   const folderPath = path.resolve("./", "assets", "icons");
+   const folderPath = path.resolve(".", "assets", "icons");
 
    const files = fs.readdirSync(folderPath);
 
@@ -24,6 +24,38 @@ export async function getStaticProps() {
 }
 
 export default function Index({ icons }) {
+   const AvailablePositions = [
+      { value: "TL", label: "Top Left", style: "left:1rem;top:1rem;" },
+      {
+         value: "TC",
+         label: "Top Center",
+         style: "top:1rem;left:50%;transform:translateX(-50%);",
+      },
+      { value: "TR", label: "Top Right", style: "right:1rem;top:1rem;" },
+      {
+         value: "CL",
+         label: "Center Left",
+         style: "left:1rem;top:50%;transform:translateY(-50%);",
+      },
+      {
+         value: "CC",
+         label: "Center Center",
+         style: "left:50%;top:50%;transform:translate(-50%,-50%);",
+      },
+      {
+         value: "CR",
+         label: "Center Right",
+         style: "right:1rem;top:50%;transform:translateY(-50%);",
+      },
+      { value: "BL", label: "Bottom Left", style: "left:1rem;bottom:1rem;" },
+      {
+         value: "BC",
+         label: "Bottom Center",
+         style: "left:50%;bottom:1rem;transform:translateX(-50%);",
+      },
+      { value: "BR", label: "Bottom Right", style: "right:1rem;bottom:1rem;" },
+   ];
+
    const [selectedIconIndex, setSelectedIconIndex] = useState(0);
    const [phoneNumber, setPhoneNumber] = useState("");
    const [bgColor, setBgColor] = useState("#62d33f");
@@ -31,7 +63,7 @@ export default function Index({ icons }) {
    const [padding, setPadding] = useState(10);
    const [iconSize, setIconSize] = useState(30);
    const [borderRadius, setBorderRadius] = useState(50);
-   const [position, setPosition] = useState("LB");
+   const [position, setPosition] = useState(AvailablePositions.at(-1).value);
    const [ShadowXoffset, setShadowXoffset] = useState(0);
    const [ShadowYoffset, setShadowYoffset] = useState(5);
    const [ShadowBlur, setShadowBlur] = useState(20);
@@ -50,29 +82,7 @@ export default function Index({ icons }) {
    }
 
    function fn_position(code) {
-      if (!code) return null;
-
-      if (position === "LT") {
-         return "left:1rem;top:1rem;";
-      } else if (position === "TC") {
-         return "top:1rem;left:50%;transform:translateX(-50%);";
-      } else if (position === "RT") {
-         return "right:1rem;top:1rem;";
-      } else if (position === "LC") {
-         return "left:1rem;top:50%;transform:translateY(-50%);";
-      } else if (position === "CC") {
-         return "left:50%;top:50%;transform:translate(-50%,-50%);";
-      } else if (position === "RC") {
-         return "right:1rem;top:50%;transform:translateY(-50%);";
-      } else if (position === "LB") {
-         return "left:1rem;bottom:1rem;";
-      } else if (position === "BC") {
-         return "left:50%;bottom:1rem;transform:translateX(-50%);";
-      } else if (position === "RB") {
-         return "right:1rem;bottom:1rem;";
-      }
-
-      // LT TC RT LC CC RC LB BC RB
+      return AvailablePositions.find((item) => item.value === code).style;
    }
 
    const ShadowCode = `box-shadow:${ShadowXoffset}px ${ShadowYoffset}px ${ShadowBlur}px ${ShadowSpread}px ${ShadowColor};`;
@@ -189,33 +199,15 @@ export default function Index({ icons }) {
                   <div className="group">
                      <span className="group_title">Position</span>
                      <div className="position">
-                        <button onClick={(e) => setPosition("LT")}>
-                           LT
-                        </button>
-                        <button onClick={(e) => setPosition("TC")}>
-                           TC
-                        </button>
-                        <button onClick={(e) => setPosition("RT")}>
-                           RT
-                        </button>
-                        <button onClick={(e) => setPosition("LC")}>
-                           LC
-                        </button>
-                        <button onClick={(e) => setPosition("CC")}>
-                           CC
-                        </button>
-                        <button onClick={(e) => setPosition("RC")}>
-                           RC
-                        </button>
-                        <button onClick={(e) => setPosition("LB")}>
-                           LB
-                        </button>
-                        <button onClick={(e) => setPosition("BC")}>
-                           BC
-                        </button>
-                        <button onClick={(e) => setPosition("RB")}>
-                           RB
-                        </button>
+                        {AvailablePositions.map((position, index) => (
+                           <button
+                              key={`position-${position.value}`}
+                              onClick={(e) => setPosition(position.value)}
+                              title={position.label}
+                           >
+                              {position.value}
+                           </button>
+                        ))}
                      </div>
                   </div>
 
@@ -224,12 +216,16 @@ export default function Index({ icons }) {
                      <div className="shadow">
                         <div className="numz">
                            <input
-                              onChange={(e) => setShadowXoffset(+e.target.value)}
+                              onChange={(e) =>
+                                 setShadowXoffset(+e.target.value)
+                              }
                               value={ShadowXoffset}
                               type="number"
                            />
                            <input
-                              onChange={(e) => setShadowYoffset(+e.target.value)}
+                              onChange={(e) =>
+                                 setShadowYoffset(+e.target.value)
+                              }
                               value={ShadowYoffset}
                               type="number"
                            />
