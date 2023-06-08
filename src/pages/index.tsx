@@ -103,7 +103,7 @@ export default function Index({
 
    const aTag = `<a href="https://wa.me/${phoneNumber}" target="_blank">\n${buttonTag}\n</a>`;
 
-   const divTag = `<div style="position:fixed;z-index:999;${fn_position(
+   const divTag = `<div style="position:absolute;z-index:999;${fn_position(
       position
    )}">\n${aTag}\n</div>`;
 
@@ -314,7 +314,7 @@ export default function Index({
                         </main>
                         <footer>footer</footer>
                         <div
-                           dangerouslySetInnerHTML={createMarkup(ButtonCode)}
+                           dangerouslySetInnerHTML={createMarkup(ButtonCode.replcse('absolute','fixed'))}
                         />
                      </div>
                   )) || (
@@ -326,7 +326,7 @@ export default function Index({
                         </div>
                         <button
                            onClick={() => {
-                              navigator.clipboard.writeText(ButtonCode);
+                              navigator.clipboard.writeText(ButtonCode.replcse('absolute','fixed');
                               alert("Copied!");
                            }}
                            className="CC_Btn"
