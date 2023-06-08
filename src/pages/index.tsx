@@ -99,7 +99,7 @@ export default function Index({
 
    const svgTag = fn_icon(selectedIconIndex);
 
-   const buttonTag = `<button style="background:${bgColor};display:flex;padding:${padding}px;border-radius:${borderRadius}%;${ShadowCode};">\n${svgTag}\n</button>`;
+   const buttonTag = `<button style="background:${bgColor};display:flex;padding:${padding}px;border-radius:${borderRadius}%;${ShadowCode};border:0;cursor:pointer;">\n${svgTag}\n</button>`;
 
    const aTag = `<a href="https://wa.me/${phoneNumber}" target="_blank">\n${buttonTag}\n</a>`;
 
