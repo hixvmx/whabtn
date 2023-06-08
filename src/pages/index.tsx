@@ -1,9 +1,13 @@
 import Head from "next/head";
-import { useState } from "react";
+import { FC, useState } from "react";
+import type { InferGetStaticPropsType, GetStaticProps } from "next";
+
 import fs from "fs";
 import path from "path";
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps<{
+   icons: string[];
+}> = async () => {
    const folderPath = path.resolve(".", "assets", "icons");
 
    const files = fs.readdirSync(folderPath);
@@ -12,7 +16,7 @@ export async function getStaticProps() {
       files.map(async (fileName) => {
          const filePath = path.join(folderPath, fileName);
          const content = await fs.promises.readFile(filePath, "utf-8");
-         return { fileName, content };
+         return content;
       })
    );
 
@@ -21,9 +25,11 @@ export async function getStaticProps() {
          icons: fileContents,
       },
    };
-}
+};
 
-export default function Index({ icons }) {
+export default function Index({
+   icons,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
    const AvailablePositions = [
       { value: "TL", label: "Top Left", style: "left:1rem;top:1rem;" },
       {
@@ -53,7 +59,11 @@ export default function Index({ icons }) {
          label: "Bottom Center",
          style: "left:50%;bottom:1rem;transform:translateX(-50%);",
       },
-      { value: "BR", label: "Bottom Right", style: "right:1rem;bottom:1rem;" },
+      {
+         value: "BR",
+         label: "Bottom Right",
+         style: "right:1rem;bottom:1rem;",
+      },
    ];
 
    const [selectedIconIndex, setSelectedIconIndex] = useState(0);
@@ -73,7 +83,7 @@ export default function Index({ icons }) {
    const [isPreviewCode, setIsPreviewCode] = useState(true);
 
    function fn_icon(iconNumber) {
-      const icon = icons[iconNumber].content;
+      const icon = icons[iconNumber];
 
       return icon.replace(
          /<svg/g,
@@ -137,9 +147,7 @@ export default function Index({ icons }) {
                               key={`icon-${index}`}
                               onClick={(e) => setSelectedIconIndex(index)}
                               type="button"
-                              dangerouslySetInnerHTML={createMarkup(
-                                 icon.content
-                              )}
+                              dangerouslySetInnerHTML={createMarkup(icon)}
                            />
                         ))}
                      </div>
