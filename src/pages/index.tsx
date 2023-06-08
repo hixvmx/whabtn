@@ -314,14 +314,14 @@ export default function Index({
                         </main>
                         <footer>footer</footer>
                         <div
-                           dangerouslySetInnerHTML={createMarkup(ButtonCode.replace('absolute','fixed'))}
+                           dangerouslySetInnerHTML={createMarkup(ButtonCode)}
                         />
                      </div>
                   )) || (
                      <>
                         <div className="showCode">
                            <pre>
-                              <code>{ButtonCode}</code>
+                              <code>{ButtonCode.replace('absolute','fixed')}</code>
                            </pre>
                         </div>
                         <button
