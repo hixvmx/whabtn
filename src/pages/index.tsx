@@ -314,7 +314,7 @@ export default function Index({
                         </main>
                         <footer>footer</footer>
                         <div
-                           dangerouslySetInnerHTML={createMarkup(ButtonCode)}
+                           dangerouslySetInnerHTML={createMarkup(ButtonCode.replace('absolute','fixed'))}
                         />
                      </div>
                   )) || (
@@ -326,7 +326,7 @@ export default function Index({
                         </div>
                         <button
                            onClick={() => {
-                              navigator.clipboard.writeText(ButtonCode.replace('absolute','fixed');
+                              navigator.clipboard.writeText(ButtonCode.replace('absolute','fixed'));
                               alert("Copied!");
                            }}
                            className="CC_Btn"
