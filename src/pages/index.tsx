@@ -1,10 +1,14 @@
 import Head from "next/head";
-import { useState } from "react";
+import { FC, useState } from "react";
+import type { InferGetStaticPropsType, GetStaticProps } from "next";
+
 import fs from "fs";
 import path from "path";
 
-export async function getStaticProps() {
-   const folderPath = path.resolve("./", "assets", "icons");
+export const getStaticProps: GetStaticProps<{
+   icons: string[];
+}> = async () => {
+   const folderPath = path.resolve(".", "assets", "icons");
 
    const files = fs.readdirSync(folderPath);
 
@@ -12,7 +16,7 @@ export async function getStaticProps() {
       files.map(async (fileName) => {
          const filePath = path.join(folderPath, fileName);
          const content = await fs.promises.readFile(filePath, "utf-8");
-         return { fileName, content };
+         return content;
       })
    );
 
@@ -21,27 +25,65 @@ export async function getStaticProps() {
          icons: fileContents,
       },
    };
-}
+};
 
-export default function Index({ icons }) {
+export default function Index({
+   icons,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+   const AvailablePositions = [
+      { value: "TL", label: "Top Left", style: "left:1rem;top:1rem;" },
+      {
+         value: "TC",
+         label: "Top Center",
+         style: "top:1rem;left:50%;transform:translateX(-50%);",
+      },
+      { value: "TR", label: "Top Right", style: "right:1rem;top:1rem;" },
+      {
+         value: "CL",
+         label: "Center Left",
+         style: "left:1rem;top:50%;transform:translateY(-50%);",
+      },
+      {
+         value: "CC",
+         label: "Center Center",
+         style: "left:50%;top:50%;transform:translate(-50%,-50%);",
+      },
+      {
+         value: "CR",
+         label: "Center Right",
+         style: "right:1rem;top:50%;transform:translateY(-50%);",
+      },
+      { value: "BL", label: "Bottom Left", style: "left:1rem;bottom:1rem;" },
+      {
+         value: "BC",
+         label: "Bottom Center",
+         style: "left:50%;bottom:1rem;transform:translateX(-50%);",
+      },
+      {
+         value: "BR",
+         label: "Bottom Right",
+         style: "right:1rem;bottom:1rem;",
+      },
+   ];
+
    const [selectedIconIndex, setSelectedIconIndex] = useState(0);
    const [phoneNumber, setPhoneNumber] = useState("");
    const [bgColor, setBgColor] = useState("#62d33f");
    const [iconColor, setIconColor] = useState("#ffffff");
-   const [padding, setPadding] = useState("10");
-   const [iconSize, setIconSize] = useState("30");
-   const [borderRadius, setBorderRadius] = useState("50");
-   const [position, setPosition] = useState("LB");
-   const [ShadowXoffset, setShadowXoffset] = useState("0");
-   const [ShadowYoffset, setShadowYoffset] = useState("5");
-   const [ShadowBlur, setShadowBlur] = useState("20");
-   const [ShadowSpread, setShadowSpread] = useState("0");
+   const [padding, setPadding] = useState(10);
+   const [iconSize, setIconSize] = useState(30);
+   const [borderRadius, setBorderRadius] = useState(50);
+   const [position, setPosition] = useState(AvailablePositions.at(-1).value);
+   const [ShadowXoffset, setShadowXoffset] = useState(0);
+   const [ShadowYoffset, setShadowYoffset] = useState(5);
+   const [ShadowBlur, setShadowBlur] = useState(20);
+   const [ShadowSpread, setShadowSpread] = useState(0);
    const [ShadowColor, setShadowColor] = useState("#B0B0B0");
 
    const [isPreviewCode, setIsPreviewCode] = useState(true);
 
    function fn_icon(iconNumber) {
-      const icon = icons[iconNumber].content;
+      const icon = icons[iconNumber];
 
       return icon.replace(
          /<svg/g,
@@ -50,29 +92,7 @@ export default function Index({ icons }) {
    }
 
    function fn_position(code) {
-      if (!code) return null;
-
-      if (position === "LT") {
-         return "left:1rem;top:1rem;";
-      } else if (position === "TC") {
-         return "top:1rem;left:50%;transform:translateX(-50%);";
-      } else if (position === "RT") {
-         return "right:1rem;top:1rem;";
-      } else if (position === "LC") {
-         return "left:1rem;top:50%;transform:translateY(-50%);";
-      } else if (position === "CC") {
-         return "left:50%;top:50%;transform:translate(-50%,-50%);";
-      } else if (position === "RC") {
-         return "right:1rem;top:50%;transform:translateY(-50%);";
-      } else if (position === "LB") {
-         return "left:1rem;bottom:1rem;";
-      } else if (position === "BC") {
-         return "left:50%;bottom:1rem;transform:translateX(-50%);";
-      } else if (position === "RB") {
-         return "right:1rem;bottom:1rem;";
-      }
-
-      // LT TC RT LC CC RC LB BC RB
+      return AvailablePositions.find((item) => item.value === code).style;
    }
 
    const ShadowCode = `box-shadow:${ShadowXoffset}px ${ShadowYoffset}px ${ShadowBlur}px ${ShadowSpread}px ${ShadowColor};`;
@@ -127,9 +147,7 @@ export default function Index({ icons }) {
                               key={`icon-${index}`}
                               onClick={(e) => setSelectedIconIndex(index)}
                               type="button"
-                              dangerouslySetInnerHTML={createMarkup(
-                                 icon.content
-                              )}
+                              dangerouslySetInnerHTML={createMarkup(icon)}
                            />
                         ))}
                      </div>
@@ -166,56 +184,39 @@ export default function Index({ icons }) {
                   <div className="group">
                      <span className="group_title">Padding</span>
                      <input
-                        onChange={(e) => setPadding(e.target.value)}
+                        onChange={(e) => setPadding(+e.target.value)}
                         value={padding}
                         type="range"
                      />
 
                      <span className="group_title">Icon size</span>
                      <input
-                        onChange={(e) => setIconSize(e.target.value)}
+                        onChange={(e) => setIconSize(+e.target.value)}
                         value={iconSize}
                         type="range"
                      />
 
                      <span className="group_title">Border radius</span>
                      <input
-                        onChange={(e) => setBorderRadius(e.target.value)}
+                        onChange={(e) => setBorderRadius(+e.target.value)}
                         value={borderRadius}
                         type="range"
+                        max={50}
                      />
                   </div>
 
                   <div className="group">
                      <span className="group_title">Position</span>
                      <div className="position">
-                        <button onClick={(e) => setPosition("LT")}>
-                           LT
-                        </button>
-                        <button onClick={(e) => setPosition("TC")}>
-                           TC
-                        </button>
-                        <button onClick={(e) => setPosition("RT")}>
-                           RT
-                        </button>
-                        <button onClick={(e) => setPosition("LC")}>
-                           LC
-                        </button>
-                        <button onClick={(e) => setPosition("CC")}>
-                           CC
-                        </button>
-                        <button onClick={(e) => setPosition("RC")}>
-                           RC
-                        </button>
-                        <button onClick={(e) => setPosition("LB")}>
-                           LB
-                        </button>
-                        <button onClick={(e) => setPosition("BC")}>
-                           BC
-                        </button>
-                        <button onClick={(e) => setPosition("RB")}>
-                           RB
-                        </button>
+                        {AvailablePositions.map((position, index) => (
+                           <button
+                              key={`position-${position.value}`}
+                              onClick={(e) => setPosition(position.value)}
+                              title={position.label}
+                           >
+                              {position.value}
+                           </button>
+                        ))}
                      </div>
                   </div>
 
@@ -223,26 +224,50 @@ export default function Index({ icons }) {
                      <span className="group_title">Shadow</span>
                      <div className="shadow">
                         <div className="numz">
-                           <input
-                              onChange={(e) => setShadowXoffset(e.target.value)}
-                              value={ShadowXoffset}
-                              type="number"
-                           />
-                           <input
-                              onChange={(e) => setShadowYoffset(e.target.value)}
-                              value={ShadowYoffset}
-                              type="number"
-                           />
-                           <input
-                              onChange={(e) => setShadowBlur(e.target.value)}
-                              value={ShadowBlur}
-                              type="number"
-                           />
-                           <input
-                              onChange={(e) => setShadowSpread(e.target.value)}
-                              value={ShadowSpread}
-                              type="number"
-                           />
+                           <div>
+                              <label htmlFor="shadowXOffset">X Offset</label>
+                              <input
+                                 id="shadowXOffset"
+                                 onChange={(e) =>
+                                    setShadowXoffset(+e.target.value)
+                                 }
+                                 value={ShadowXoffset}
+                                 type="number"
+                              />
+                           </div>
+                           <div>
+                              <label htmlFor="shadowYOffset">Y Offset</label>
+                              <input
+                                 id="shadowYOffset"
+                                 onChange={(e) =>
+                                    setShadowYoffset(+e.target.value)
+                                 }
+                                 value={ShadowYoffset}
+                                 type="number"
+                              />
+                           </div>
+                           <div>
+                              <label htmlFor="shadowBlur">Blur</label>
+                              <input
+                                 id="shadowBlur"
+                                 onChange={(e) =>
+                                    setShadowBlur(+e.target.value)
+                                 }
+                                 value={ShadowBlur}
+                                 type="number"
+                              />
+                           </div>
+                           <div>
+                              <label htmlFor="shadowSpread">Spread</label>
+                              <input
+                                 id="shadowSpread"
+                                 onChange={(e) =>
+                                    setShadowSpread(+e.target.value)
+                                 }
+                                 value={ShadowSpread}
+                                 type="number"
+                              />
+                           </div>
                         </div>
                         <input
                            onChange={(e) => setShadowColor(e.target.value)}
@@ -252,6 +277,7 @@ export default function Index({ icons }) {
                            hidden
                         />
                         <label htmlFor="ShadowColor">
+                           Color
                            <div style={{ background: ShadowColor }}></div>
                         </label>
                      </div>
