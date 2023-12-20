@@ -144,7 +144,7 @@ button {
 /* Aside Body */
 .aside_body {
    border-top: 1px solid var(--border-color-secondary);
-   margin: 2rem 0;
+   margin: 1rem 0;
    padding: 2rem 0;
 }
 
@@ -255,7 +255,7 @@ button {
 /* preview */
 .website_body {
    max-width: 700px;
-   width: 700px;
+   width: -webkit-fill-available;
    margin: 0 auto;
    padding: 4rem 0;
    flex: 1 1 auto;
@@ -446,9 +446,9 @@ button {
 }
 
 @media (max-width: 700px) {
-   .position {
+   /* .position {
       display: grid;
       grid-template-columns: repeat(1, 1fr);
       grid-gap: 0.5rem;
-   }
+   } */
 }
