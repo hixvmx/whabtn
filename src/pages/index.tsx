@@ -301,7 +301,7 @@ export default function Index({
                         }
                         className="copyCodeBtn"
                      >
-                        {isPreviewCode ? "Html Code" : "Preview"}
+                        {isPreviewCode ? "Get Html Code" : "Preview"}
                      </button>
                   </div>
 
